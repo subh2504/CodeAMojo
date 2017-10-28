@@ -5,6 +5,207 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <style>
+            @import url(https://fonts.googleapis.com/css?family=Lato);
+body {
+  margin: 10px;
+}
+.font {
+  font-family: 'Lato', sans-serif;
+}
+.controlContainer {
+  position: relative;
+  width: 90%;
+}
+.inputFileHolder {
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+}
+.inputFileHolder input {
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  position: absolute;
+  right: 44px;
+  height: 32px;
+}
+.inputFileHolder a {
+  cursor: pointer;
+  float: right;
+}
+.btn {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 5px 12px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  color: #333333;
+  background-color: #ebebeb;
+  border: 1px solid #b2b2b2;
+  border-bottom-color: #6c6c6c;
+}
+.btn-Gradiant {
+  background-image: -moz-linear-gradient(top, #ffffff, #cccccc);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#cccccc));
+  background-image: -webkit-linear-gradient(top, #ffffff, #cccccc);
+  background-image: -o-linear-gradient(top, #ffffff, #cccccc);
+  background-image: linear-gradient(to bottom, #ffffff, #cccccc);
+  background-repeat: repeat-x;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  border-color: #cccccc #cccccc #a6a6a6;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffcccccc', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.inputFileMask {
+  margin-right: 64px;
+}
+.parentContainer {
+  width: 680px;
+  margin-bottom: 10px;
+}
+.pull-rigth {
+  float: right;
+}
+.btn-inverse {
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  background-color: #3c3737;
+  background-image: -moz-linear-gradient(top, #6c6c6c, #3c3737);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#6c6c6c), to(#3c3737));
+  background-image: -webkit-linear-gradient(top, #6c6c6c, #3c3737);
+  background-image: -o-linear-gradient(top, #6c6c6c, #3c3737);
+  background-image: linear-gradient(to bottom, #3e3a3a, #262323);
+  background-repeat: repeat-x;
+  color: white;
+}
+.btn-inverse:hover {
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  background-color: #3c3737;
+  background-image: -moz-linear-gradient(top, #5c5c5c, #2f2f2f);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5c5c5c), to(#2f2f2f));
+  background-image: -webkit-linear-gradient(top, #5c5c5c, #2f2f2f);
+  background-image: -o-linear-gradient(top, #5c5c5c, #2f2f2f);
+  background-image: linear-gradient(to bottom, #5c5c5c, #2f2f2f);
+  background-repeat: repeat-x;
+  color: white;
+}
+.btn-browse {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 0;
+}
+.btn-flat-browse {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 0;
+  background-color: #d6d6d6;
+  border: 1px solid #d6d6d6;
+  padding: 5px 12px;
+}
+.btn-flat {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  margin: 0 0 0 10px;
+  font-size: 14px;
+  color: #ffffff;
+  padding: 6px 11px;
+  border: 0 solid;
+  background-color: #2ecc71;
+}
+.btn-flat:hover {
+  border: 0 solid #2a963a;
+  background-color: #32b469;
+}
+input {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  display: inline-block;
+  height: 22px;
+  padding: 4px 6px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #555555;
+  vertical-align: middle;
+}
+.fileInput {
+  width: 100%;
+}
+.inputType {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  font-size: 23px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  transform: translate(-300px, 0) scale(4);
+  direction: ltr;
+  display: block;
+}
+.inputFileMaskText {
+  border: solid 1px #b2b2b2;
+  width: 100%;
+}
+.inputFileMaskText2 {
+  height: 20px;
+  border: solid 2px #d6d6d6;
+  width: 100%;
+}
+i {
+  font-family: 'Lato', sans-serif;
+  text-rendering: auto;
+}
+input.file {
+  position: relative;
+  text-align: right;
+  -moz-opacity: 0 ;
+  opacity: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+.btn-add {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  margin: 0 0 0 10px;
+  font-size: 14px;
+  color: #ffffff;
+  padding: 7px 10px;
+  background: -moz-linear-gradient(top, #666666 0%, #262626 50%, #242424 50%, #000000);
+  background: -webkit-gradient(linear, left top, left bottom, from(#666666), color-stop(0.5, #262626), color-stop(0.5, #242424), to(#000000));
+  border: 1px solid #000000;
+  -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5), inset 0px 0px 1px rgba(255, 255, 255, 0.6);
+  -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5), inset 0px 0px 1px rgba(255, 255, 255, 0.6);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5), inset 0px 0px 1px rgba(255, 255, 255, 0.6);
+  text-shadow: 0px -1px 0px #000000, 0px 1px 0px rgba(255, 255, 255, 0.2);
+}
+.btn-add:hover {
+  background: -moz-linear-gradient(top, #575757 0%, #1a1a1a 50%, #151515 50%, #000000);
+  background: -webkit-gradient(linear, left top, left bottom, from(#575757), color-stop(0.5, #1a1a1a), color-stop(0.5, #151515), to(#000000));
+}
+
+        </style>
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
     </head>
     <body>
