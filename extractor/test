@@ -1,0 +1,24 @@
+def validate_pan_number(value):
+    """
+    Validates if the given value is a valid PAN number or not, if not raise ValidationError
+    """
+    if re.match(r'^[A-Z]{5}[0-9]{4}[A-Z]$', value):
+        return True
+    else:
+        raise ValidationError(
+            '%(value)s is not valid PAN number',
+            params={'value': value},
+            )
+
+
+Steps:
+	-> Take image
+	-> crop to box(which has text in it)
+	-> convert into gray scale(mono crome)
+	-> give to tesseract
+	-> text(output of tesseract)
+Now we will process this text means we will get meaningful information from it.
+	-> find name using name database
+	-> find father's name(assuming that second will be father's name)
+	-> find year of birth
+	-> find for PAN
