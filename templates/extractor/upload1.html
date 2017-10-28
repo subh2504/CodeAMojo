@@ -5,8 +5,28 @@
 {% block content %}
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <input type="file" name="file">
-    <button type="submit">Upload11</button>
+   <!-- <input type="file" name="file">
+    <button type="submit">Upload</button>-->
+    
+     <div class="parentContainer">
+  <div class="controlContainer">
+    <div class="inputFileHolder">
+      <button id="btnAdd" class="btn-add pull-right" type="submit" title="Upload file">
+        <span class="font"></span>
+        <i class="fa fa-plus-circle"></i>
+      </button>
+      <a class="btn btn-browse btn-Gradiant" href="#" title="Browse">
+        <i class="fa fa-folder-open"></i>
+      </a>
+      <input id="fileInput" name="fileInput" class="fileInput" title="Choose file to upload" type="file">
+    </div>
+    <div class="inputFileMask">
+      <input class="inputFileMaskText" readonly="readonly" placeholder="Choose file.." id="inputFileMaskText" >
+    </div>
+  </div>
+ 
+</div>
+
   </form>
 
   {% if uploaded_file_url %}
