@@ -21,6 +21,30 @@ def upload_file(request):
     return render(request, 'extractor/upload.html')
 
 
+
+def upload_file1(request):
+    if request.method == 'POST' and request.FILES['file']:
+        myfile = request.FILES['file']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'extractor/upload1.html', {
+            'uploaded_file_url': uploaded_file_url
+        })
+    return render(request, 'extractor/upload1.html')
+
+
+def upload_file2(request):
+    if request.method == 'POST' and request.FILES['file']:
+        myfile = request.FILES['file']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'extractor/upload2.html', {
+            'uploaded_file_url': uploaded_file_url
+        })
+    return render(request, 'extractor/upload2.html')
+
 def handle_uploaded_file(f):
     with open('name.txt', 'wb+') as destination:
         for chunk in f.chunks():
