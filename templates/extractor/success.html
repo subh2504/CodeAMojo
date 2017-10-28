@@ -1,21 +1,33 @@
-{% extends 'extractor/base.html' %}
+{% extends 'base.html' %}
 
 {% load static %}
 
 {% block content %}
-{#  <form method="post" enctype="multipart/form-data">#}
-{#    {% csrf_token %}#}
-{#    <input type="file" name="file">#}
-{#    <button type="submit">Uploakkkd</button>#}
-{#  </form>#}
-{{ data }}
 
-  {% if error == "N"%}
-       <form class="form-horizontal" method="post" action={% url 'success' %}>
+
+<div class="container-fluid bg-1 text-center">
+
+
+    <div class="row">
+    <div class="col-md-4">
+
+    </div>
+     <div class="col-md-4">
+         {% if uploaded_file_url %}
+             <img src="{{ uploaded_file_url}}" class="img-responsive margin" style="display:inline">
+         {% endif %}
+
+    </div>
+     <div class="col-md-4">
+
+    </div>
+
+</div>
+        <form class="form-horizontal" method="post" action={% url 'success' %}>
   <div class="form-group">
     <label class="control-label col-sm-2" for="name">Name:</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="name" value={{name}}>
+        {{ data.Name }}
     </div>
       <label class="radio-inline"><input type="radio" name="optradio1">Correct</label>
       <label class="radio-inline"><input type="radio" name="optradio1">Wrong</label>
@@ -23,16 +35,16 @@
   <div class="form-group">
     <label class="control-label col-sm-2" for="fname">Fathers Name:</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="fname" >
+      {{ data.Father_Name }}
     </div>
       <label class="radio-inline"><input type="radio" name="optradio2">Correct</label>
-      <label class="radio-inline"><input type="radio" name="optradio3">Wrong</label>
+      <label class="radio-inline"><input type="radio" name="optradio2">Wrong</label>
   </div>
 
   <div class="form-group">
     <label class="control-label col-sm-2" for="dob">DOB:</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="dob" >
+      {{ data.Date_of_Birth }}
     </div>
       <label class="radio-inline"><input type="radio" name="optradio3">Correct</label>
       <label class="radio-inline"><input type="radio" name="optradio3">Wrong</label>
@@ -42,7 +54,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2" for="pan">PAN:</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="pan" >
+      {{ data.PAN }}
     </div>
 
 
@@ -52,17 +64,22 @@
 
 
   <div class="form-group">
-    <div class="col-sm-offset-4 col-sm-10">
-      <button type="submit" class="btn btn-success btn-md">Submit</button>
+    <div class="col-sm-offset-4 col-sm-4">
+      <button type="submit" class="btn btn-success btn-lg">Submit</button>
     </div>
   </div>
     </form>
+</div>
 
-  {% elif error == "Y" %}
-      <p>{{ msg }}</p>
-{#    <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>#}
-  {% endif %}
-    </div>
+
+
+
+
+
+
+
+
+
 
 {#  <p><a href="{% url 'home' %}">Return to home</a></p>#}
 {% endblock %}

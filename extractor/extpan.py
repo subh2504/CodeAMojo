@@ -8,6 +8,17 @@ import pytesseract
 import re
 import difflib
 import csv
+from dateutil.parser import parse
+
+
+def validate_pan_number(value):
+    """
+    Validates if the given value is a valid PAN number or not, if not raise ValidationError
+    """
+    if re.match(r'^[A-Z]{5}[0-9]{4}[A-Z]$', value):
+        return True
+    else:
+        return False
 #import dateutil.parser as dparser
 
 try:
@@ -36,9 +47,10 @@ for y in range(img.size[1]):
 img.save('temp.jpg')
 
 text = pytesseract.image_to_string(Image.open('temp.jpg'))
-text = "".join(filter(lambda x: ord(x) < 128, text))
+
+text = ''.join([i if ord(i) < 128 else ' ' for i in text])
 print(" OCr Text")
-print(str(text))
+print(text)
 # Initializing data variable
 name = None
 fname = None
@@ -58,58 +70,95 @@ for lin in lines:
     s = s.rstrip()
     s = s.lstrip()
     text1.append(s)
-
-text1 = "".join(filter(None, text1))
+#print("text1")
+#print(text1)
+text1 = list(filter(None,text1))
 #print(text1)
 lineno = 0
 
 for wordline in text1:
     xx = wordline.split()
-    if ([w for w in xx if
-         re.search('(GOVERNMENT|OVERNMENT|VERNMENT|DEPARTMENT|EPARTMENT|PARTMENT|ARTMENT|INDIA|NDIA)$', w)]):
+    if ([w for w in xx if re.search('(GOVERNMENT|OVERNMENT|VERNMENT|DEPARTMENT|EPARTMENT|PARTMENT|ARTMENT|INDIA|NDIA)$', w)]):
         lineno = text1.index(wordline)
         break
 
-text0 = text1[lineno + 1:]
-print(text0)
-#
-# # -----------Read Database
-# with open('namedb.csv', 'rb') as f:
-#     reader = csv.reader(f)
-#     newlist = list(reader)
-# newlist = sum(newlist, [])
-#
-# # Searching for Name and finding closest name in database
-# try:
-#     for x in text0:
-#         for y in x.split():
-#             if (difflib.get_close_matches(y.upper(), newlist)):
-#                 nameline.append(x)
-#                 break
-# except:
-#     pass
 
+text0 = text1[lineno + 0:]
+
+
+for wordline in text0:
+    xx = wordline.split()
+    if ([w for w in xx if re.search('(INDIA|NDIA)$', w)]):
+        lineno = text0.index(wordline)
+        break
+
+
+text0 = text1[lineno + 0:]
+#print("text0")
+#print(text0)
+
+#-----------Read Database
+
+import os.path
+
+scriptpath = os.path.dirname(__file__)
+filename = os.path.join(scriptpath, 'namedb.csv')
+f=open(filename)
+#print(f.read())
+
+#f=open(r'test', 'rb')
+reader = csv.reader(f)
+newlist = list(reader)
+newlist = sum(newlist, [])
+
+#Searching for Name and finding closest name in database
+try:
+    for x in text0:
+        xx = x.split()
+        if ([w for w in xx if re.search('(Number|umber|Account|ccount|count|Permanent|ermanent|manent)$', w)]):
+            #print(xx)
+            break
+        for y in x.split():
+
+            if (difflib.get_close_matches(y.upper(), newlist)):
+                nameline.append(x)
+                break
+except:
+     pass
+
+#print("Name Line")
+#print(nameline)
 try:
     name = nameline[0]
     fname = nameline[1]
 except:
     pass
+#print(name,fname)
 
 try:
     dobline = [item for item in text0 if item not in nameline]
+    #print("dobline")
     #print (dobline)
     for x in dobline:
         z = x.split()
+        print("z")
+        print(z)
         z = [s for s in z if len(s) > 3]
-        # for y in z:
-        #     if (dparser.parse(y, fuzzy=True)):
-        #         dob = dparser.parse(y, fuzzy=True).year
-        #         panline = dobline[dobline.index(x) + 1:]
-        #         break
-except:
+        print(z)
+        for y in z:
+            if (parse(y, fuzzy=True)):
+                dob = str(parse(y, fuzzy=True).day)+"/"+str(parse(y, fuzzy=True).month)+"/"+str(parse(y, fuzzy=True).year)
+                panline = dobline[dobline.index(x) + 1:]
+                break
+
+except Exception as e:
     pass
+    #print(e)
+
+#print("DOB "+str(dob))
 
 try:
+    print(panline)
     for wordline in panline:
         xx = wordline.split()
         if ([w for w in xx if re.search('(Number|umber|Account|ccount|count|Permanent|ermanent|manent)$', w)]):
@@ -119,7 +168,10 @@ try:
 except:
     pass
 
+#print("PAN "+pan)
+
 # Making tuples of data
+
 data = {}
 data['Name'] = name
 data['Father Name'] = fname
@@ -127,12 +179,28 @@ data['Date of Birth'] = dob
 data['PAN'] = pan
 
 print(data)
-# Writing data into JSON
-with open('../result/' + os.path.basename(sys.argv[1]).split('.')[0] + '.json', 'w') as fp:
-    json.dump(data, fp)
 
-# Removing dummy files
-#os.remove('temp.jpg')
+print(data['Name'])
+
+print(data['Father Name'])
+print(data['Date of Birth'])
+print(data['PAN'])
+error="N"
+msg=""
+if(data['PAN'] is None):
+    print("Image Uploaded Is Not Readable")
+    error="Y"
+    msg="Image Uploaded Is Not Readable"
+elif(validate_pan_number(data['PAN'])):
+    print("Not A Valid PAn Card")
+    error="Y"
+    msg="Not A Valid PAn Card"
+# Writing data into JSON
+# with open('../result/' + os.path.basename(sys.argv[1]).split('.')[0] + '.json', 'w') as fp:
+#     json.dump(data, fp)
+
+#Removing dummy files
+os.remove('temp.jpg')
 #
 # '''
 # # Reading data back JSON(give correct path where JSON is stored)
@@ -149,3 +217,5 @@ with open('../result/' + os.path.basename(sys.argv[1]).split('.')[0] + '.json', 
 # print(ndata['PAN'])
 # print "-------------------------------"
 # #s'''
+
+

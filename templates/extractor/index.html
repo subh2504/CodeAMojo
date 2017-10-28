@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid bg-1 text-center">
+
+  <h3 class="margin">UPLOAD KYC DOCUMENT</h3>
+  <form method="post" enctype="multipart/form-data" class="form-inline">
+        {% csrf_token %}
+  <div class="form-group">
+
+    <input type="file" class="form-control" id="file" name="file" required>
+  </div>
+
+  <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+<div class="row">
+    <div class="col-sm-4">
+
+    </div>
+     <div class="col-sm-4">
+         {% if uploaded_file_url %}
+             <img src="{{ uploaded_file_url}}" class="img-responsive margin" style="display:inline">
+         {% endif %}
+
+    </div>
+     <div class="col-sm-4">
+
+    </div>
+
+</div>
+
+  <h3></h3>
+</div>
+
+{% endblock %}}

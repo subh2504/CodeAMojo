@@ -16,8 +16,7 @@ Including another URLconf
 from django.conf.urls import url,include
 from . import  views
 urlpatterns = [
-    url(r'^upload_file/', views.upload_file,name='upload_file'),
-    url(r'^upload_file1/', views.upload_file,name='upload_file1'),
-    url(r'^upload_file2/', views.upload_file,name='upload_file2'),
+    url(r'^', views.upload_file,name='index'),
+    url(r'^success/', views.success,name='success'),
 
 ]
