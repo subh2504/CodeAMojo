@@ -3,18 +3,22 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import UploadFileForm
 
+from django.core.files.storage import FileSystemStorage
+
+
 # Imaginary function to handle an uploaded file.
 #from somewhere import handle_uploaded_file
 
 def upload_file(request):
-    if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            handle_uploaded_file(request.FILES['file'])
-            return HttpResponseRedirect('/success/')
-    else:
-        form = UploadFileForm()
-    return render(request, 'extractor/upload.html', {'form': form})
+    if request.method == 'POST' and request.FILES['file']:
+        myfile = request.FILES['file']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'extractor/upload.html', {
+            'uploaded_file_url': uploaded_file_url
+        })
+    return render(request, 'extractor/upload.html')
 
 
 def handle_uploaded_file(f):

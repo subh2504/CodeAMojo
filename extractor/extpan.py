@@ -18,9 +18,14 @@ except:
 path = sys.argv[1]
 
 img = Image.open(path)
-img = img.convert('RGBA')
+fill_color = '#ffffff'
+if img.mode in ('RGBA', 'LA'):
+    background = Image.new(img.mode[:-1], img.size, fill_color)
+    background.paste(img, img.split()[-1])
+    img = background
+#img = img.convert('RGBA')
 pix = img.load()
-
+img.save('temp1.jpg')
 for y in range(img.size[1]):
     for x in range(img.size[0]):
         if pix[x, y][0] < 102 or pix[x, y][1] < 102 or pix[x, y][2] < 102:
@@ -31,8 +36,9 @@ for y in range(img.size[1]):
 img.save('temp.jpg')
 
 text = pytesseract.image_to_string(Image.open('temp.jpg'))
-text = filter(lambda x: ord(x) < 128, text)
-
+text = "".join(filter(lambda x: ord(x) < 128, text))
+print(" OCr Text")
+print(str(text))
 # Initializing data variable
 name = None
 fname = None
@@ -53,8 +59,8 @@ for lin in lines:
     s = s.lstrip()
     text1.append(s)
 
-text1 = filter(None, text1)
-# print(text1)
+text1 = "".join(filter(None, text1))
+#print(text1)
 lineno = 0
 
 for wordline in text1:
@@ -65,23 +71,23 @@ for wordline in text1:
         break
 
 text0 = text1[lineno + 1:]
-# print(text0)
-
-# -----------Read Database
-with open('namedb.csv', 'rb') as f:
-    reader = csv.reader(f)
-    newlist = list(reader)
-newlist = sum(newlist, [])
-
-# Searching for Name and finding closest name in database
-try:
-    for x in text0:
-        for y in x.split():
-            if (difflib.get_close_matches(y.upper(), newlist)):
-                nameline.append(x)
-                break
-except:
-    pass
+print(text0)
+#
+# # -----------Read Database
+# with open('namedb.csv', 'rb') as f:
+#     reader = csv.reader(f)
+#     newlist = list(reader)
+# newlist = sum(newlist, [])
+#
+# # Searching for Name and finding closest name in database
+# try:
+#     for x in text0:
+#         for y in x.split():
+#             if (difflib.get_close_matches(y.upper(), newlist)):
+#                 nameline.append(x)
+#                 break
+# except:
+#     pass
 
 try:
     name = nameline[0]
@@ -91,7 +97,7 @@ except:
 
 try:
     dobline = [item for item in text0 if item not in nameline]
-    print (dobline)
+    #print (dobline)
     for x in dobline:
         z = x.split()
         z = [s for s in z if len(s) > 3]
@@ -120,25 +126,26 @@ data['Father Name'] = fname
 data['Date of Birth'] = dob
 data['PAN'] = pan
 
+print(data)
 # Writing data into JSON
 with open('../result/' + os.path.basename(sys.argv[1]).split('.')[0] + '.json', 'w') as fp:
     json.dump(data, fp)
 
 # Removing dummy files
-os.remove('temp.jpg')
-
-'''
-# Reading data back JSON(give correct path where JSON is stored)
-with open('../result/'+sys.argv[1]+'.json', 'r') as f:
-     ndata = json.load(f)
-
-print "+++++++++++++++++++++++++++++++"     
-print(ndata['Name'])
-print "-------------------------------"
-print(ndata['Father Name'])
-print "-------------------------------"
-print(ndata['Date of Birth'])
-print "-------------------------------"
-print(ndata['PAN'])
-print "-------------------------------"
-#'''
+#os.remove('temp.jpg')
+#
+# '''
+# # Reading data back JSON(give correct path where JSON is stored)
+# with open('../result/'+sys.argv[1]+'.json', 'r') as f:
+#      ndata = json.load(f)
+#
+# print "+++++++++++++++++++++++++++++++"
+# print(ndata['Name'])
+# print "-------------------------------"
+# print(ndata['Father Name'])
+# print "-------------------------------"
+# print(ndata['Date of Birth'])
+# print "-------------------------------"
+# print(ndata['PAN'])
+# print "-------------------------------"
+# #s'''
