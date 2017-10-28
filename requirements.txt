@@ -1,0 +1,15 @@
+dj-database-url==0.4.2
+Django==1.11.6
+gunicorn==19.7.1
+numpy==1.13.3
+olefile==0.44
+opencv-python==3.3.0.10
+Pillow==4.3.0
+pytesseract==0.1.7
+python-dateutil==2.6.1
+pytz==2017.2
+scipy==1.0.0
+six==1.11.0
+whitenoise==3.3.1
+psycopg2==2.6.2
+
