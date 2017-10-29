@@ -125,7 +125,7 @@ $('#file').on('change', function(file){
 			//$('#pdf-canvas').hide();
 			// Get the content type of the image
 			contentType = block[0].split(":")[1];// In this case "image/gif"
-            alert(contentType);
+            //alert(contentType);
 			// get the real base64 content of the file
 			realData = block[1].split(",")[1];// In this case "R0lGODlhPQBEAPeoAJosM...."
 			// Convert it to a blob to upload
@@ -256,8 +256,8 @@ function b64toBlob(b64Data, contentType, sliceSize) {
   	return blob;
 }
   </script>
-<script src="media/pdf.js"></script>
-	<script src="media/pdf.worker.js"></script>
+<script src="{% static "pdf.js"%}"></script>
+	<script src="{% static "pdf.worker.js"%}"></script>
 <!-- Footer -->
 <footer class="container-fluid1 bg-4 text-center">
   <p>CodeAMojo @2017</p>
