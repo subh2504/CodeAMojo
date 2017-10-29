@@ -200,7 +200,7 @@ class extract(object):
         print(data['PAN'])
         error="N"
         msg=""
-        if(data['PAN'] == "" and data['Date_of_Birth'] == "" and data['Name'] ==""):
+        if((data['PAN'] == "" or data['PAN'] == None)and (data['Date_of_Birth'] == "" or data['Date_of_Birth'] == None) and (data['Name'] =="" or data['Name'] ==None)):
             print("Image Uploaded Is Not Readable")
             error="Y"
             msg="Image Uploaded Is Not Readable"
