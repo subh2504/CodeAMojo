@@ -1,100 +1,5 @@
-{% load staticfiles %}
 
-<html lang="en">
-<head>
-  <!-- Theme Made By www.w3schools.com - No Copyright -->
-  <title>CodeAMojo</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-
-
-  <style>
-  body {
-      font: 20px Montserrat, sans-serif;
-      line-height: 1.8;
-      color: #f5f6f7;
-  }
-  p {font-size: 16px;}
-  .margin {margin-bottom: 45px;}
-  .bg-1 {
-      background-color: #1abc9c; /* Green */
-      color: #ffffff;
-  }
-  .bg-2 {
-      background-color: #474e5d; /* Dark Blue */
-      color: #ffffff;
-  }
-  .bg-3 {
-      background-color: #ffffff; /* White */
-      color: #555555;
-  }
-  .bg-4 {
-      background-color: #2f2f2f; /* Black Gray */
-      color: #fff;
-  }
-  .container-fluid {
-      height: auto;
-      padding-top: 70px;
-      padding-bottom: 70px;
-  }
-
-  .container-fluid1 {
-      padding-top: 50px;
-      padding-bottom: 50px;
-  }
-  .navbar {
-      padding-top: 15px;
-      padding-bottom: 15px;
-      border: 0;
-      border-radius: 0;
-      margin-bottom: 0;
-      font-size: 12px;
-      letter-spacing: 5px;
-  }
-  .navbar-nav  li a:hover {
-      color: #1abc9c !important;
-  }
-  </style>
-</head>
-<body>
-
-<!-- Navbar -->
-<nav class="navbar navbar-default">
-
-  <div class="container">
-
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">CodeAMojo</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-{#        <li><a href="#">UPLOAD</a></li>#}
-{#        <li><a href="#">SUBMIT</a></li>#}
-{#        <li><a href="#">FEEDB</a></li>#}
-      </ul>
-    </div>
-  </div>
-  </div>
-</nav>
-
-<!-- First Container -->
-
-{% block content %}
-{% endblock %}
-<script type="application/javascript">
-
-$('#file').on('change', function(file){
+$('#imgUpload').on('change', function(file){
 	var dataURL;
 	var blob = "";
     var input = file.target;
@@ -105,7 +10,7 @@ $('#file').on('change', function(file){
 	      	dataURL = reader.result;
 	      	//Display Image
 	      	$('#divImage').attr('src',dataURL);
-
+		    
 		    // Split the base64 string in data and contentType
 			block = dataURL.split(";");
 			// Get the content type of the image
@@ -117,15 +22,11 @@ $('#file').on('change', function(file){
 
     	}
     	else if(file.target.files[0].type == "application/pdf"){
-    		showPDF(URL.createObjectURL($("#file").get(0).files[0]));
+    		showPDF(URL.createObjectURL($("#imgUpload").get(0).files[0]));
     		// Split the base64 string in data and contentType
 			block = __CANVAS.toDataURL().split(";");
-			//$("#divImage").show();
-			$('#divImage').attr('src',block);
-			//$('#pdf-canvas').hide();
 			// Get the content type of the image
 			contentType = block[0].split(":")[1];// In this case "image/gif"
-            alert(contentType);
 			// get the real base64 content of the file
 			realData = block[1].split(",")[1];// In this case "R0lGODlhPQBEAPeoAJosM...."
 			// Convert it to a blob to upload
@@ -139,14 +40,14 @@ $('#file').on('change', function(file){
     	var blobData = new FormData();
       	blobData.append('file', blob);
     	//send blob to Server.
-{#    	$.ajax({#}
-{#    		type: "POST",#}
-{#    		url: "http://192.168.0.67:8080/extractor/upload_file2/",#}
-{#    		data: blobData,#}
-{#    		processData: false#}
-{#    	}).done(function (response) {#}
-{#    		console.log(response);#}
-{#    	})#}
+    	// $.ajax({
+    	// 	type: "POST",
+    	// 	url: "http://192.168.0.67:8080/extractor/upload_file2/",
+    	// 	data: blobData,
+    	// 	processData: false
+    	// }).done(function (response) {
+    	// 	console.log(response);
+    	// })
     };
     reader.readAsDataURL(input.files[0]);
 });
@@ -163,7 +64,7 @@ function showPDF(pdf_url) {
 	PDFJS.getDocument({ url: pdf_url }).then(function(pdf_doc) {
 		__PDF_DOC = pdf_doc;
 		__TOTAL_PAGES = __PDF_DOC.numPages;
-
+		
 		// Hide the pdf loader and show pdf container in HTML
 		//$("#pdf-loader").hide();
 		//$("#pdf-contents").show();
@@ -175,7 +76,7 @@ function showPDF(pdf_url) {
 		// If error re-show the upload button
 		//$("#pdf-loader").hide();
 		//$("#upload-button").show();
-
+		
 		console.log(error.message);
 	});;
 }
@@ -194,7 +95,7 @@ function showPage(page_no) {
 
 	// Update current page in HTML
 	//$("#pdf-current-page").text(page_no);
-
+	
 	// Fetch the page
 	__PDF_DOC.getPage(page_no).then(function(page) {
 		// As the canvas is of a fixed width we need to set the scale of the viewport accordingly
@@ -210,7 +111,7 @@ function showPage(page_no) {
 			canvasContext: __CANVAS_CTX,
 			viewport: viewport
 		};
-
+		
 		// Render the page contents in the canvas
 		page.render(renderContext).then(function() {
 			__PAGE_RENDERING_IN_PROGRESS = 0;
@@ -255,14 +156,3 @@ function b64toBlob(b64Data, contentType, sliceSize) {
   	var blob = new Blob(byteArrays, {type: contentType});
   	return blob;
 }
-  </script>
-<script src="media/pdf.js"></script>
-	<script src="media/pdf.worker.js"></script>
-<!-- Footer -->
-<footer class="container-fluid1 bg-4 text-center">
-  <p>CodeAMojo @2017</p>
-</footer>
-
-</body>
-</html>
-

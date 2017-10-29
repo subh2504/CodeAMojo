@@ -21,7 +21,7 @@ from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^extractor/', include('extractor.urls')),
+   url(r'^', include('extractor.urls')),
 ]
 
 

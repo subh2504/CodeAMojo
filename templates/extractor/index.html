@@ -21,9 +21,9 @@
 
     </div>
      <div class="col-sm-4">
-         {% if uploaded_file_url %}
-             <img src="{{ uploaded_file_url}}" class="img-responsive margin" style="display:inline">
-         {% endif %}
+
+             <img src="" class="img-responsive margin" style="display:inline" id="divImage">
+             <canvas id="pdf-canvas" width="400" style="display: none;"></canvas>
 
     </div>
      <div class="col-sm-4">
@@ -31,6 +31,13 @@
     </div>
 
 </div>
+
+{% if error == "Y" %}
+
+<div class="alert alert-danger">
+  <strong>Error! </strong> {{ msg }}
+</div>
+{% endif %}
 
   <h3></h3>
 </div>

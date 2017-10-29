@@ -11,21 +11,27 @@ from django.core.files.storage import FileSystemStorage
 
 def upload_file(request):
     x={}
-    if request.method == 'POST' and request.FILES['file']:
-        myfile = request.FILES['file']
-        f=save_image(myfile)
+    try:
 
-        if(f["error"]=="N"):
-            ext=extract.extract()
-            x=ext.extract_pandata_individual(f["uploaded_file_url"],1)
-            print("GVGGG")
-            print(x)
-            x["uploaded_file_url"]=f["uploaded_file_url"]
-            return render(request, 'extractor/success.html', dict(x))
-        else:
-            x=f
-            return render(request, 'extractor/index.html', x)
+        if request.method == 'POST' and request.FILES['file']:
+            myfile = request.FILES['file']
+            f=save_image(myfile)
+
+            if(f["error"]=="N"):
+                ext=extract.extract()
+                x=ext.extract_pandata_individual(f["uploaded_file_url"],1)
+                print("GVGGG")
+                print(x)
+                x["uploaded_file_url"]=f["uploaded_file_url"]
+                return render(request, 'extractor/success.html', dict(x))
+            else:
+                x=f
+                return render(request, 'extractor/index.html', x)
+    except Exception as e:
+        x["error"]="Y"
+        x["msg"]="Something Went Wrong Please Try Again"
     return render(request, 'extractor/index.html',x)
+
 
 
 
@@ -39,6 +45,7 @@ def success(request):
 def save_image(f):
     try:
         fs = FileSystemStorage()
+
         filename = fs.save(f.name, f)
         uploaded_file_url = fs.url(filename)
         return {"uploaded_file_url":uploaded_file_url,"error":"N"}

@@ -9,6 +9,7 @@ import pytesseract
 import re
 import difflib
 import csv
+from .crop_morphology import cm
 from dateutil.parser import parse
 try:
     from PIL import Image, ImageEnhance, ImageFilter
@@ -37,6 +38,7 @@ class extract(object):
 
         path= unquote(img_p[1:])
         print(img_p)
+        #cm([pa])
         img = Image.open(path)
         fill_color = '#ffffff'
         if img.mode in ('RGBA', 'LA'):
