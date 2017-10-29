@@ -86,6 +86,11 @@ class extract(object):
         text1 = list(filter(None,text1))
         print(text1)
         lineno = 0
+        for wordline in text1:
+            xx = wordline.split()
+            if ([w for w in xx if re.search('(Incorporation|ncorporation|corporation)$', w)]):
+                type = 2
+                break
 
         for wordline in text1:
             xx = wordline.split()
@@ -184,6 +189,7 @@ class extract(object):
         data['Father_Name'] = fname
         data['Date_of_Birth'] = dob
         data['PAN'] = pan
+        data['type']=str(type)
 
         print(data)
 

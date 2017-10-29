@@ -12,7 +12,7 @@ from dateutil.parser import parse
 
 
 def validate_pan_number(value):
-    """
+    """Incorporation
     Validates if the given value is a valid PAN number or not, if not raise ValidationError
     """
     if re.match(r'^[A-Z]{5}[0-9]{4}[A-Z]$', value):
@@ -75,6 +75,7 @@ for lin in lines:
 text1 = list(filter(None,text1))
 #print(text1)
 lineno = 0
+
 
 for wordline in text1:
     xx = wordline.split()
@@ -177,6 +178,7 @@ data['Name'] = name
 data['Father Name'] = fname
 data['Date of Birth'] = dob
 data['PAN'] = pan
+data['PAN_TYPE']=type
 
 print(data)
 

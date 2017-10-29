@@ -38,9 +38,11 @@ def upload_file(request):
 def success(request):
     x = {}
     if request.method == 'POST':
-        x = request.POST.get['x']
-        print(x)
-    return render(request, 'extractor/success.html')
+        # x = request.POST.get['x']
+        # print(x)
+        pass
+
+    return HttpResponseRedirect('/')
 
 def save_image(f):
     try:

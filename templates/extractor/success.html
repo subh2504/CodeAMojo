@@ -24,6 +24,8 @@
 
 </div>
         <form class="form-horizontal" method="post" action={% url 'success' %}>
+                    {% csrf_token %}
+
   <div class="form-group">
     <label class="control-label col-sm-2" for="name">Name:</label>
     <div class="col-sm-6">
@@ -32,7 +34,9 @@
       <label class="radio-inline"><input type="radio" name="optradio1">Correct</label>
       <label class="radio-inline"><input type="radio" name="optradio1">Wrong</label>
   </div>
-  <div class="form-group">
+
+  {% if data.type == '1'%}
+      <div class="form-group">
     <label class="control-label col-sm-2" for="fname">Fathers Name:</label>
     <div class="col-sm-6">
       {{ data.Father_Name }}
@@ -40,8 +44,10 @@
       <label class="radio-inline"><input type="radio" name="optradio2">Correct</label>
       <label class="radio-inline"><input type="radio" name="optradio2">Wrong</label>
   </div>
+  {% endif %}
 
-  <div class="form-group">
+{% if data.type == '1'%}
+    <div class="form-group">
     <label class="control-label col-sm-2" for="dob">DOB:</label>
     <div class="col-sm-6">
       {{ data.Date_of_Birth }}
@@ -49,6 +55,19 @@
       <label class="radio-inline"><input type="radio" name="optradio3">Correct</label>
       <label class="radio-inline"><input type="radio" name="optradio3">Wrong</label>
   </div>
+{% endif %}
+
+{% if data.type == '2'%}
+    <div class="form-group">
+    <label class="control-label col-sm-2" for="dob">Date Of Incorporation:</label>
+    <div class="col-sm-6">
+      {{ data.Date_of_Birth }}
+    </div>
+      <label class="radio-inline"><input type="radio" name="optradio3">Correct</label>
+      <label class="radio-inline"><input type="radio" name="optradio3">Wrong</label>
+  </div>
+{% endif %}
+
 
 
   <div class="form-group">
