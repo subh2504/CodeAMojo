@@ -88,7 +88,7 @@ class extract(object):
         lineno = 0
         for wordline in text1:
             xx = wordline.split()
-            if ([w for w in xx if re.search('(Incorporation|ncorporation|corporation)$', w)]):
+            if ([w for w in xx if re.search('(Incorporati|ncorporat|corporati)$', w)]):
                 type = 2
                 break
 
